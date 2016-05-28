@@ -90,23 +90,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KEYMAP(  // layer 0 : default
         // left hand
-        EQL, 1,   2,   3,   4,   5,   ESC,
-        BSLS,Q,   W,   E,   R,   T,   FN2,
-        TAB, A,   S,   D,   F,   G,
-        LSFT,Z,   X,   C,   V,   B,   FN1,
-        LGUI,GRV, BSLS,LEFT,RGHT,
-                                      LCTL,LALT,
-                                           HOME,
-                                 BSPC,DEL, END,
+        ESC,	1,	2,	3,	4,	5,	6,
+        TAB,	Q,	W,	E,	R,	T,	BSPC,
+        GRV,	A,	S,	D,	F,	G,
+        LSFT,	Z,	X,	C,	V,	B,	FN5,
+        LCTL,	HOME,	END,	FN1,	LALT,
+                                FN6,	BSLS,
+                                        FN1,
+                        LGUI,	SPC,	BSLS,
         // right hand
-             FN3, 6,   7,   8,   9,   0,   MINS,
-             LBRC,Y,   U,   I,   O,   P,   RBRC,
-                  H,   J,   K,   L,   SCLN,QUOT,
-             FN1, N,   M,   COMM,DOT, SLSH,RSFT,
-                       LEFT,DOWN,UP,  RGHT,RGUI,
-        RALT,RCTL,
-        PGUP,
-        PGDN,ENT, SPC
+        7,	8,	9,	0,	MINS,	EQL,	BSPC,
+        FN7,	Y,	U,	I,	O,	P,	QUOT,
+        H,	J,	K,	L,	SCLN,	ENT,
+        TAB,	N,	M,	COMM,	DOT,	UP,	SLSH,
+        LBRC,	RBRC,	LEFT,	DOWN,	RIGHT,
+        PGUP,	RCTL,
+        PGDN,
+        BTN2,	RGUI,	SPC
     ),
 
     KEYMAP(  // layer 1 : function and symbol keys
@@ -121,13 +121,13 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  TRNS,TRNS,TRNS,
         // right hand
              F12, F6,  F7,  F8,  F9,  F10, TRNS,
-             TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-                  TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
+             TRNS,TRNS,TRNS,UP,TRNS,TRNS,TRNS,
+                  TRNS,LEFT,DOWN,RIGHT,TRNS,TRNS,
              TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
                        TRNS,TRNS,TRNS,TRNS,TRNS,
-        TRNS,TRNS,
-        TRNS,
-        TRNS,TRNS,TRNS
+        MUTE,TRNS,
+        VOLU,
+        VOLD,TRNS,TRNS
     ),
 
     KEYMAP(  // layer 2 : keyboard functions
@@ -177,6 +177,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* id for user defined functions */
 enum function_id {
     TEENSY_KEY,
+    TESTT,
 };
 
 /*
@@ -188,6 +189,9 @@ static const uint16_t PROGMEM fn_actions[] = {
     ACTION_LAYER_SET(2, ON_PRESS),                  // FN2 - set Layer2
     ACTION_LAYER_TOGGLE(3),                         // FN3 - toggle Layer3 aka Numpad layer
     ACTION_LAYER_SET(0, ON_PRESS),                  // FN4 - set Layer0
+    ACTION_MODS_KEY(MOD_LGUI,KC_C),
+    ACTION_MODS_KEY(MOD_LGUI,KC_V),
+    ACTION_MODS_KEY(MOD_LGUI,KC_X),
 };
 
 void action_function(keyrecord_t *event, uint8_t id, uint8_t opt)
@@ -198,6 +202,8 @@ void action_function(keyrecord_t *event, uint8_t id, uint8_t opt)
         _delay_ms(250);
         bootloader_jump(); // should not return
         print("not supported.\n");
+    } else if (id == TESTT) {
+        MACRO( I(0), T(H), T(E), T(L), T(L), W(255), T(O), END ) ;
     }
 }
 
@@ -235,4 +241,3 @@ action_t keymap_fn_to_action(uint8_t keycode)
     return action;
 }
 #endif
-
